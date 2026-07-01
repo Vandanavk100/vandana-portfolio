@@ -20,8 +20,9 @@ export interface Project {
   title: string;
   description: string;
   stack: string[];
-  github: string;
+  github?: string;
   live?: string;
+  status?: string;
 }
 
 export interface SkillCategory {
