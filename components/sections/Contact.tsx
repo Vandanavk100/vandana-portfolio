@@ -96,14 +96,33 @@ export function Contact() {
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = async (_data: ContactFormValues) => {
+  const onSubmit = async (data: ContactFormValues) => {
     setFormStatus("submitting");
-    // Simulate an API call with setTimeout
-    await new Promise<void>((resolve) => setTimeout(resolve, 1500));
-    setFormStatus("success");
-    reset();
-    // Reset back to idle after a delay so the user can submit again
-    setTimeout(() => setFormStatus("idle"), 6000);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+          subject: `New portfolio message from ${data.name}`,
+          from_name: data.name,
+          ...data,
+        }),
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Submission failed");
+      }
+
+      setFormStatus("success");
+      reset();
+      // Reset back to idle after a delay so the user can submit again
+      setTimeout(() => setFormStatus("idle"), 6000);
+    } catch {
+      setFormStatus("error");
+    }
   };
 
   const inputBase =
@@ -286,6 +305,14 @@ export function Contact() {
                         </p>
                       )}
                     </div>
+
+                    {formStatus === "error" && (
+                      <p className="text-xs text-red-500 flex items-center gap-1.5 -mt-1">
+                        <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                        Something went wrong sending your message. Please try
+                        again or email me directly.
+                      </p>
+                    )}
 
                     {/* Submit */}
                     <button
