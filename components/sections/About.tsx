@@ -1,9 +1,30 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { User } from "lucide-react";
+import CountUp from "react-countup";
+import {
+  User,
+  Rocket,
+  RefreshCw,
+  ListChecks,
+  Cpu,
+  type LucideIcon,
+} from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { STAT_CARDS, ABOUT_SUMMARY } from "@/lib/data";
+import { STAT_CARDS, ABOUT_SUMMARY, WHY_HIRE_ME } from "@/lib/data";
+
+const WHY_ICONS: Record<string, LucideIcon> = {
+  Rocket,
+  RefreshCw,
+  ListChecks,
+  Cpu,
+};
+
+function parseStatValue(value: string) {
+  const match = value.match(/^(\d+)(.*)$/);
+  if (!match) return { end: 0, suffix: value };
+  return { end: Number(match[1]), suffix: match[2] };
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -41,23 +62,67 @@ export function About() {
           {/* Stat cards */}
           <motion.div
             variants={containerVariants}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-14"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-14"
           >
-            {STAT_CARDS.map((stat) => (
-              <motion.div
-                key={stat.label}
-                variants={itemVariants}
-                whileHover={{ scale: 1.03, y: -4 }}
-                className="card-base card-hover p-8 text-center group"
-              >
-                <div className="text-4xl font-black bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-200">
-                  {stat.value}
-                </div>
-                <div className="text-slate-600 dark:text-slate-400 font-medium text-sm">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
+            {STAT_CARDS.map((stat) => {
+              const { end, suffix } = parseStatValue(stat.value);
+              return (
+                <motion.div
+                  key={stat.label}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.03, y: -4 }}
+                  className="card-base card-hover p-8 text-center group"
+                >
+                  <div className="text-4xl font-black bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-200">
+                    <CountUp
+                      end={end}
+                      suffix={suffix}
+                      duration={2}
+                      enableScrollSpy
+                      scrollSpyOnce
+                    />
+                  </div>
+                  <div className="text-slate-600 dark:text-slate-400 font-medium text-sm">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+
+          {/* Why work with me */}
+          <motion.div variants={itemVariants} className="mb-14">
+            <h3 className="text-center text-lg font-bold text-slate-900 dark:text-white mb-8">
+              Why I&apos;m a strong fit for your team
+            </h3>
+            <motion.div
+              variants={containerVariants}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+            >
+              {WHY_HIRE_ME.map((item) => {
+                const Icon = WHY_ICONS[item.icon] ?? Rocket;
+                return (
+                  <motion.div
+                    key={item.title}
+                    variants={itemVariants}
+                    whileHover={{ scale: 1.02, y: -4 }}
+                    className="card-base card-hover p-6 flex items-start gap-4"
+                  >
+                    <div className="flex-shrink-0 p-2.5 rounded-xl bg-blue-500/10">
+                      <Icon className="w-5 h-5 text-blue-500" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-900 dark:text-white text-sm mb-1.5">
+                        {item.title}
+                      </h4>
+                      <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
           </motion.div>
 
           {/* About content */}

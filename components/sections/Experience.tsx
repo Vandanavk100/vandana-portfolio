@@ -40,7 +40,7 @@ export function Experience() {
 
           {/* Timeline */}
           <div className="max-w-3xl mx-auto">
-            {EXPERIENCES.map((exp, idx) => (
+            {EXPERIENCES.map((exp) => (
               <motion.div
                 key={exp.id}
                 variants={itemVariants}

@@ -35,10 +35,42 @@ export const STAT_CARDS: StatCard[] = [
   { value: "3+", label: "Years of Experience" },
   { value: "2", label: "Companies" },
   { value: "21+", label: "Pages Delivered" },
+  { value: "7+", label: "Production Projects" },
 ];
 
 export const ABOUT_SUMMARY =
   "Full Stack Developer with 3+ years of experience in React.js, Next.js, TypeScript, JavaScript, Node.js, and PostgreSQL, building scalable enterprise web applications and REST API integrations. Specialized in component library development, Redux Toolkit state management, performance optimization, and SSR/SSG migration — delivering 35% faster page loads, 30% Lighthouse improvement, and 25% reduction in development effort. Experienced in micro frontend architecture, responsive design, and cross-team collaboration across production-scale environments.";
+
+export const WHY_HIRE_ME: {
+  icon: string;
+  title: string;
+  description: string;
+}[] = [
+  {
+    icon: "Rocket",
+    title: "Live, production-grade delivery",
+    description:
+      "Shipped and maintained live enterprise platforms — AALP, Adani ConneX, Adani Logistics, and Henkel's reporting dashboard — used by real business teams, not just demos.",
+  },
+  {
+    icon: "RefreshCw",
+    title: "Migration & modernisation specialist",
+    description:
+      "Led a React-to-Next.js SSR/SSG migration and refactored 50+ class components to Hooks on a live production app under a tight deadline, with zero regressions.",
+  },
+  {
+    icon: "ListChecks",
+    title: "Complex, multi-step form systems",
+    description:
+      "Designed 6-step dynamic form workflows with conditional validation for enterprise onboarding, cutting user errors by 30%.",
+  },
+  {
+    icon: "Cpu",
+    title: "Full-stack, AI-assisted engineering",
+    description:
+      "Built an AI-powered bank reconciliation tool end to end — React/MUI front end integrated with .NET APIs and SQL Server — including a manual-match fallback for unmatched transactions.",
+  },
+];
 
 export const EXPERIENCES: Experience[] = [
   {
@@ -78,12 +110,35 @@ export const EXPERIENCES: Experience[] = [
 
 export const PROJECTS: Project[] = [
   {
+    id: "crf",
+    title: "Chintan Research Foundation — Publications Portal",
+    description:
+      "Next.js platform for browsing and managing research publications and datasets, with dynamic filtering by person, date, year, and custom columns. Each record resolves to a dedicated detail page with downloadable source files.",
+    stack: ["Next.js", "React.js", "Data Filtering", "File Downloads"],
+    status: "In Progress",
+  },
+  {
+    id: "bank-reconciliation",
+    title: "AI-Powered Bank Reconciliation System",
+    description:
+      "Internal application that uses AI to automatically match bank transactions against company records, cutting manual reconciliation effort. Owned full-stack development, .NET API integration, the MUI-based UI, and a manual-match workflow for unresolved transactions.",
+    stack: ["React.js", "Material UI", ".NET APIs", "SQL Server", "JavaScript"],
+    status: "Internal Project",
+  },
+  {
     id: "aalp",
     title: "AALP Enterprise Platform",
     description:
       "Enterprise dashboards and multi-step onboarding with real-time REST API integrations and a TypeScript component library serving 500+ internal users.",
     stack: ["React.js", "TypeScript", "REST APIs", "Bootstrap"],
     github: "https://github.com/vandana-kumawat",
+  },
+  {
+    id: "hooks-migration",
+    title: "Production Class-to-Hooks Migration",
+    description:
+      "Migrated a live, production React application from class components to functional components with Hooks under a tight deadline. Navigated multiple third-party library dependencies and complex state management while shipping zero regressions, improving long-term maintainability and readability.",
+    stack: ["React.js", "React Hooks", "Regression Testing"],
   },
   {
     id: "modernisation",
@@ -116,6 +171,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       "Redux Toolkit",
       "React Hooks",
       "Context API",
+      "React Native",
     ],
   },
   {

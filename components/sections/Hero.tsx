@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useTypewriter, Cursor } from "react-simple-typewriter";
 import { motion } from "framer-motion";
 import { Download, ArrowRight, Mail, Github, Linkedin, ChevronDown } from "lucide-react";
 import { PERSONAL, CONTACT_INFO, HERO_TECH_PILLS } from "@/lib/data";
@@ -14,39 +14,18 @@ const TYPING_STRINGS = [
 ];
 
 function TypingSubtitle() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [charIndex, setCharIndex] = useState(0);
-
-  useEffect(() => {
-    const current = TYPING_STRINGS[currentIndex];
-    let timeout: ReturnType<typeof setTimeout>;
-
-    if (!isDeleting && charIndex < current.length) {
-      timeout = setTimeout(() => {
-        setDisplayed(current.slice(0, charIndex + 1));
-        setCharIndex((c) => c + 1);
-      }, 80);
-    } else if (!isDeleting && charIndex === current.length) {
-      timeout = setTimeout(() => setIsDeleting(true), 1800);
-    } else if (isDeleting && charIndex > 0) {
-      timeout = setTimeout(() => {
-        setDisplayed(current.slice(0, charIndex - 1));
-        setCharIndex((c) => c - 1);
-      }, 40);
-    } else if (isDeleting && charIndex === 0) {
-      setIsDeleting(false);
-      setCurrentIndex((i) => (i + 1) % TYPING_STRINGS.length);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, currentIndex]);
+  const [text] = useTypewriter({
+    words: TYPING_STRINGS,
+    loop: true,
+    typeSpeed: 70,
+    deleteSpeed: 40,
+    delaySpeed: 1800,
+  });
 
   return (
     <span className="inline-block min-w-[1px]">
-      {displayed}
-      <span className="animate-pulse text-blue-400 ml-0.5">|</span>
+      {text}
+      <Cursor cursorStyle="|" cursorColor="#60a5fa" />
     </span>
   );
 }
@@ -73,7 +52,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white dark:bg-slate-950 px-4 sm:px-6 lg:px-8"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white dark:bg-slate-950 px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:pt-32"
     >
       {/* Background gradient blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -119,10 +98,12 @@ export function Hero() {
         {/* Name */}
         <motion.h1
           variants={itemVariants}
-          className="text-5xl sm:text-6xl lg:text-7xl font-black mb-4 leading-tight"
+          className="text-5xl sm:text-6xl lg:text-7xl font-black mb-4 leading-tight text-center"
         >
           <span className="text-slate-900 dark:text-white">Hi, I&apos;m </span>
-          <span className="bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <span
+            className="bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-move"
+          >
             {PERSONAL.name}
           </span>
         </motion.h1>

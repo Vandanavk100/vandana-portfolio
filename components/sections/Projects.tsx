@@ -62,9 +62,18 @@ export function Projects() {
                                     group-hover:bg-blue-500/20 transition-colors duration-200">
                       <FolderOpen className="w-5 h-5 text-blue-500" />
                     </div>
-                    <h3 className="font-bold text-slate-900 dark:text-white text-base leading-snug">
-                      {project.title}
-                    </h3>
+                    <div className="flex-1 flex items-start justify-between gap-2">
+                      <h3 className="font-bold text-slate-900 dark:text-white text-base leading-snug">
+                        {project.title}
+                      </h3>
+                      {project.status && (
+                        <span className="flex-shrink-0 px-2 py-0.5 rounded-full text-[10px] font-semibold
+                                         bg-amber-500/10 text-amber-600 dark:text-amber-400
+                                         border border-amber-500/20 whitespace-nowrap">
+                          {project.status}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Description */}
@@ -83,18 +92,24 @@ export function Projects() {
 
                   {/* Links */}
                   <div className="flex items-center gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-xs font-medium
-                                 text-slate-500 dark:text-slate-400
-                                 hover:text-blue-500 dark:hover:text-blue-400
-                                 transition-colors duration-200"
-                    >
-                      <Github className="w-3.5 h-3.5" />
-                      View Code
-                    </a>
+                    {project.github ? (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-xs font-medium
+                                   text-slate-500 dark:text-slate-400
+                                   hover:text-blue-500 dark:hover:text-blue-400
+                                   transition-colors duration-200"
+                      >
+                        <Github className="w-3.5 h-3.5" />
+                        View Code
+                      </a>
+                    ) : (
+                      <span className="text-xs font-medium text-slate-400 dark:text-slate-600">
+                        Private codebase
+                      </span>
+                    )}
                     {project.live && (
                       <a
                         href={project.live}
